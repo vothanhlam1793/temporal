@@ -1,0 +1,21 @@
+{
+  "name": "temporal-approval-exercise",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev:server": "docker compose up",
+    "dev:server:down": "docker compose down",
+    "dev:worker": "tsx src/worker.ts",
+    "dev:client": "tsx src/client.ts",
+    "check": "tsc --noEmit"
+  },
+  "devDependencies": {
+    "@temporalio/activity": "^1.12.2",
+    "@temporalio/client": "^1.12.2",
+    "@temporalio/worker": "^1.12.2",
+    "@temporalio/workflow": "^1.12.2",
+    "@types/node": "^22.0.0",
+    "tsx": "^4.19.0",
+    "typescript": "^5.7.0"
+  }
+}
