@@ -12,6 +12,9 @@ npm run dev:server
 ```
 
 Wait until Temporal is ready, then open `http://localhost:8233` to inspect workflows.
+For this local exercise, the UI also permits `http://10.7.0.21:8233`. It deliberately
+uses an insecure CSRF cookie because the UI is served over HTTP; do not copy that setting
+to a production deployment. Use HTTPS there.
 
 ```sh
 npm run dev:worker

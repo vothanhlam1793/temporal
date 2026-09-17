@@ -27,7 +27,9 @@ services:
     image: temporalio/ui:2.34.0
     environment:
       TEMPORAL_ADDRESS: temporal:7233
-      TEMPORAL_CORS_ORIGINS: http://localhost:3000
+      TEMPORAL_CORS_ORIGINS: http://localhost:8233,http://127.0.0.1:8233,http://10.7.0.21:8233
+      # Local/LAN exercise uses HTTP; production should serve the UI over HTTPS.
+      TEMPORAL_CSRF_COOKIE_INSECURE: "true"
     ports:
       - "8233:8080"
     depends_on:
