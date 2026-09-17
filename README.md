@@ -1,6 +1,11 @@
 # Temporal approval exercise
 
-This small example pays an expense. Expenses at or below `$100` are paid automatically; an expense above that threshold waits for a manager's durable approval signal.
+This exercise models an expense reimbursement across four roles:
+
+- Employee starts a `$150` expense request.
+- Manager approves or rejects it with a signal.
+- Finance confirms payment with a second signal.
+- Monitor sends durable reminders every 20 seconds while either human role is pending.
 
 ## Run it
 
@@ -24,7 +29,20 @@ npm run dev:worker
 npm run dev:client
 ```
 
-The client starts a `$250` expense workflow. It stops at the approval wait. Check its event history in the UI, then press Enter in the client terminal. That sends the `approveExpense` signal and the workflow resumes.
+The employee client prints the new workflow ID and waits for its result. Use the workflow ID in two further terminals:
+
+```sh
+npm run dev:manager -- <workflow-id> approved Lan
+npm run dev:finance -- <workflow-id> Hoa
+```
+
+The manager can also reject the expense:
+
+```sh
+npm run dev:manager -- <workflow-id> rejected Lan
+```
+
+Watch the Workflow History in the UI. Leave the workflow pending for 20 seconds to see the monitor activities enqueue reminders. You can send the same signals from the UI: `managerDecision` takes `["approved", "Lan"]`, while `financePaymentComplete` takes `["Hoa"]`.
 
 Stop the worker while the client is waiting, start it again, then approve. The workflow still resumes because its state and event history live in Temporal, not the worker process.
 
@@ -33,7 +51,8 @@ Stop the worker while the client is waiting, start it again, then approve. The w
 - `src/workflows.ts`: durable orchestration. It never performs external I/O directly.
 - `src/activities.ts`: external work, which Temporal can retry.
 - `src/worker.ts`: runs workflow code and activities from the task queue.
-- `src/client.ts`: starts the workflow and signals the human decision.
+- `src/client.ts`: employee client that starts a workflow.
+- `src/manager.ts` and `src/finance.ts`: role-specific signal clients. These map directly to HTTP API endpoints in a production service.
 
 ## LangGraph connection
 

@@ -7,6 +7,8 @@
     "dev:server:down": "docker compose down",
     "dev:worker": "tsx src/worker.ts",
     "dev:client": "tsx src/client.ts",
+    "dev:manager": "tsx src/manager.ts",
+    "dev:finance": "tsx src/finance.ts",
     "check": "tsc --noEmit"
   },
   "devDependencies": {

@@ -1,13 +1,24 @@
-export async function assessExpense(amount: number): Promise<string> {
-  console.log(`Reviewing expense of $${amount}`);
-
-  if (amount <= 100) {
-    return "Expense is eligible for automatic approval.";
-  }
-
-  return "Manager approval is required.";
+export async function recordExpense(
+  employee: string,
+  amount: number,
+): Promise<void> {
+  console.log(`Recorded $${amount} expense for ${employee}`);
 }
 
-export async function reimburseExpense(amount: number): Promise<void> {
-  console.log(`Reimbursing $${amount}`);
+export async function notify(role: string, message: string): Promise<void> {
+  console.log(`[Notify ${role}] ${message}`);
+}
+
+export async function requestFinancePayment(amount: number): Promise<void> {
+  console.log(`Requested finance payment for $${amount}`);
+}
+
+export async function recordReimbursement(
+  employee: string,
+  amount: number,
+  financeOfficer: string,
+): Promise<void> {
+  console.log(
+    `Recorded $${amount} reimbursement for ${employee}, confirmed by ${financeOfficer}`,
+  );
 }
